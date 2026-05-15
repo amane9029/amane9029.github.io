@@ -1,287 +1,244 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Building</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
-<style>
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Building</title>
 
-  :root {
-    --bg: #050505;
-    --bg-elevated: #0a0a0a;
-    --surface: rgba(255, 255, 255, 0.03);
-    --surface-hover: rgba(255, 255, 255, 0.06);
-    --ink: #e8e6e3;
-    --ink-muted: #555;
-    --ink-faint: #1a1a1a;
-    --accent: #c9a96e;
-    --accent-glow: rgba(201, 169, 110, 0.12);
-    --border: rgba(255, 255, 255, 0.05);
-  }
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
 
-  body {
-    min-height: 100vh;
-    background: var(--bg);
-    color: var(--ink);
-    font-family: 'Inter', sans-serif;
-    display: flex;
-    flex-direction: column;
-    overflow-x: hidden;
-  }
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-  /* Subtle animated background */
-  .bg {
-    position: fixed;
-    inset: 0;
-    pointer-events: none;
-    z-index: 0;
-  }
+    :root {
+      --bg: #050505;
+      --bg-elevated: #0a0a0a;
+      --surface: rgba(255, 255, 255, 0.03);
+      --surface-hover: rgba(255, 255, 255, 0.06);
+      --ink: #e8e6e3;
+      --ink-muted: #777;
+      --ink-faint: #1a1a1a;
+      --accent: #c9a96e;
+      --accent-glow: rgba(201, 169, 110, 0.12);
+      --border: rgba(255, 255, 255, 0.05);
+    }
 
-  .bg::before {
-    content: '';
-    position: absolute;
-    top: -30%;
-    left: -20%;
-    width: 140%;
-    height: 140%;
-    background: radial-gradient(ellipse 60% 50% at 30% 40%, rgba(201, 169, 110, 0.06), transparent),
-                radial-gradient(ellipse 50% 40% at 70% 70%, rgba(80, 80, 80, 0.04), transparent);
-    animation: drift 18s ease-in-out infinite;
-  }
+    body {
+      min-height: 100vh;
+      background: var(--bg);
+      color: var(--ink);
+      font-family: 'Inter', sans-serif;
+      overflow-x: hidden;
+      position: relative;
+    }
 
-  @keyframes drift {
-    0%, 100% { transform: translate(0, 0); }
-    50% { transform: translate(20px, -20px); }
-  }
+    .bg {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      background:
+        radial-gradient(circle at 30% 30%, rgba(201, 169, 110, 0.06), transparent 35%),
+        radial-gradient(circle at 70% 70%, rgba(255, 255, 255, 0.02), transparent 30%);
+      animation: drift 18s ease-in-out infinite;
+    }
 
-  .noise {
-    position: fixed;
-    inset: 0;
-    pointer-events: none;
-    z-index: 1;
-    opacity: 0.02;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4[...]
-    background-size: 200px;
-  }
+    @keyframes drift {
+      0%, 100% { transform: translate(0, 0); }
+      50% { transform: translate(20px, -20px); }
+    }
 
-  /* Layout */
-  .wrap {
-    position: relative;
-    z-index: 2;
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    max-width: 720px;
-    margin: 0 auto;
-    width: 100%;
-    padding: 4rem 2rem;
-  }
+    .noise {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 1;
+      opacity: 0.03;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+      background-size: 4px 4px;
+    }
 
-  /* Top status */
-  .status {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.6rem;
-    margin-bottom: 4rem;
-    font-size: 0.7rem;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    color: var(--ink-muted);
-  }
+    .wrap {
+      position: relative;
+      z-index: 2;
+      max-width: 720px;
+      margin: 0 auto;
+      min-height: 100vh;
+      padding: 4rem 2rem;
+      display: flex;
+      flex-direction: column;
+    }
 
-  .status-dot {
-    width: 6px;
-    height: 6px;
-    border-radius: 50%;
-    background: var(--accent);
-    box-shadow: 0 0 10px var(--accent-glow);
-    animation: pulse 2.5s ease-in-out infinite;
-  }
+    .status {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      margin-bottom: 4rem;
+      font-size: 0.7rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--ink-muted);
+    }
 
-  @keyframes pulse {
-    0%, 100% { opacity: 1; transform: scale(1); }
-    50% { opacity: 0.5; transform: scale(0.8); }
-  }
+    .status-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--accent);
+      box-shadow: 0 0 10px var(--accent-glow);
+      animation: pulse 2.5s ease-in-out infinite;
+    }
 
-  /* Main content */
-  .hero {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-  }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.5; transform: scale(0.8); }
+    }
 
-  h1 {
-    font-family: 'Space Grotesk', sans-serif;
-    font-size: clamp(2.5rem, 6vw, 4.2rem);
-    font-weight: 700;
-    line-height: 1.08;
-    letter-spacing: -0.03em;
-    margin-bottom: 1.5rem;
-  }
+    .hero {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
 
-  h1 em {
-    font-style: normal;
-    color: var(--accent);
-    position: relative;
-  }
+    h1 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(2.5rem, 6vw, 4.2rem);
+      font-weight: 700;
+      line-height: 1.08;
+      letter-spacing: -0.03em;
+      margin-bottom: 1.5rem;
+    }
 
-  h1 em::after {
-    content: '';
-    position: absolute;
-    bottom: 0.05em;
-    left: 0;
-    width: 100%;
-    height: 0.06em;
-    background: var(--accent);
-    opacity: 0.25;
-    transform: skewX(-10deg);
-  }
+    h1 em {
+      font-style: italic;
+      color: var(--accent);
+    }
 
-  .desc {
-    font-size: 0.9rem;
-    line-height: 1.7;
-    color: var(--ink-muted);
-    max-width: 400px;
-    margin-bottom: 3rem;
-  }
+    .desc {
+      font-size: 0.95rem;
+      line-height: 1.7;
+      color: var(--ink-muted);
+      max-width: 450px;
+      margin-bottom: 3rem;
+    }
 
-  .divider {
-    width: 32px;
-    height: 1px;
-    background: var(--ink-faint);
-    margin-bottom: 2.5rem;
-  }
+    .divider {
+      width: 32px;
+      height: 1px;
+      background: var(--ink-faint);
+      margin-bottom: 2.5rem;
+    }
 
-  /* Project list */
-  .list {
-    display: flex;
-    flex-direction: column;
-    border-top: 1px solid var(--border);
-  }
+    .list {
+      display: flex;
+      flex-direction: column;
+      border-top: 1px solid var(--border);
+    }
 
-  .item {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 1.25rem 0;
-    border-bottom: 1px solid var(--border);
-    cursor: pointer;
-    transition: all 0.3s ease;
-    position: relative;
-    text-decoration: none;
-    color: inherit;
-  }
+    .item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.25rem 0;
+      border-bottom: 1px solid var(--border);
+      cursor: pointer;
+      transition: all 0.3s ease;
+      position: relative;
+      text-decoration: none;
+      color: inherit;
+    }
 
-  .item::before {
-    content: '';
-    position: absolute;
-    left: 0;
-    top: 0;
-    bottom: 0;
-    width: 0;
-    background: linear-gradient(90deg, var(--accent-glow), transparent);
-    transition: width 0.4s ease;
-  }
+    .item::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      width: 0;
+      background: linear-gradient(90deg, var(--accent-glow), transparent);
+      transition: width 0.4s ease;
+    }
 
-  .item:hover {
-    padding-left: 12px;
-  }
+    .item:hover {
+      padding-left: 12px;
+    }
 
-  .item:hover::before {
-    width: 100%;
-  }
+    .item:hover::before {
+      width: 100%;
+    }
 
-  .item-left {
-    display: flex;
-    align-items: baseline;
-    gap: 1.25rem;
-    position: relative;
-    z-index: 1;
-  }
+    .item-left {
+      display: flex;
+      align-items: baseline;
+      gap: 1.25rem;
+      position: relative;
+      z-index: 1;
+    }
 
-  .num {
-    font-family: 'Space Grotesk', sans-serif;
-    font-size: 0.65rem;
-    color: var(--ink-muted);
-    font-variant-numeric: tabular-nums;
-    min-width: 20px;
-  }
+    .num {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.65rem;
+      color: var(--ink-muted);
+      min-width: 20px;
+    }
 
-  .name {
-    font-size: 0.9rem;
-    font-weight: 400;
-    color: var(--ink);
-    letter-spacing: 0.01em;
-    transition: color 0.3s;
-  }
+    .name {
+      font-size: 0.95rem;
+      color: var(--ink);
+      transition: color 0.3s ease;
+    }
 
-  .item:hover .name {
-    color: var(--accent);
-  }
+    .item:hover .name {
+      color: var(--accent);
+    }
 
-  .tag {
-    font-size: 0.6rem;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: var(--ink-muted);
-    border: 1px solid var(--ink-faint);
-    padding: 3px 10px;
-    border-radius: 100px;
-    transition: all 0.3s;
-    position: relative;
-    z-index: 1;
-  }
+    .tag {
+      font-size: 0.65rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--ink-muted);
+      border: 1px solid var(--ink-faint);
+      padding: 4px 10px;
+      border-radius: 999px;
+      position: relative;
+      z-index: 1;
+      transition: all 0.3s ease;
+    }
 
-  .item:hover .tag {
-    border-color: var(--accent);
-    color: var(--accent);
-    background: var(--accent-glow);
-  }
+    .item:hover .tag {
+      border-color: var(--accent);
+      color: var(--accent);
+      background: var(--accent-glow);
+    }
 
-  /* Keyboard focus (since it's now a link) */
-  .item:focus-visible {
-    outline: 2px solid var(--accent);
-    outline-offset: 6px;
-    border-radius: 6px;
-  }
+    footer {
+      margin-top: auto;
+      padding-top: 4rem;
+      font-size: 0.7rem;
+      color: var(--ink-muted);
+      text-align: center;
+      letter-spacing: 0.08em;
+    }
 
-  /* Footer */
-  footer {
-    margin-top: auto;
-    padding-top: 4rem;
-    font-size: 0.65rem;
-    letter-spacing: 0.08em;
-    color: var(--ink-muted);
-    text-align: center;
-  }
+    @media (max-width: 480px) {
+      .wrap {
+        padding: 2.5rem 1.2rem;
+      }
 
-  /* Entrance animations */
-  .fade {
-    opacity: 0;
-    transform: translateY(16px);
-    animation: fadeUp 0.7s ease forwards;
-  }
+      .tag {
+        display: none;
+      }
 
-  .fade:nth-child(1) { animation-delay: 0.1s; }
-  .fade:nth-child(2) { animation-delay: 0.2s; }
-  .fade:nth-child(3) { animation-delay: 0.3s; }
-  .fade:nth-child(4) { animation-delay: 0.4s; }
-  .fade:nth-child(5) { animation-delay: 0.5s; }
-  .fade:nth-child(6) { animation-delay: 0.6s; }
-
-  @keyframes fadeUp {
-    to { opacity: 1; transform: translateY(0); }
-  }
-
-  @media (max-width: 480px) {
-    .wrap { padding: 3rem 1.5rem; }
-    .item:hover { padding-left: 8px; }
-    .tag { display: none; }
-  }
-</style>
+      .item:hover {
+        padding-left: 8px;
+      }
+    }
+  </style>
 </head>
 <body>
 
@@ -289,25 +246,25 @@
   <div class="noise"></div>
 
   <div class="wrap">
-    <div class="status fade">
+    <div class="status">
       <span class="status-dot"></span>
-      <span>In progress</span>
+      <span>In Progress</span>
     </div>
 
     <main class="hero">
-      <h1 class="fade">
-        Something<br>
+      <h1>
+        Something <br>
         <em>interesting</em><br>
         is building.
       </h1>
-      
-      <p class="desc fade">
+
+      <p class="desc">
         A collection of tools, experiments, and ideas — currently in active development. Check back soon.
       </p>
 
-      <div class="divider fade"></div>
+      <div class="divider"></div>
 
-      <div class="list fade">
+      <div class="list">
         <a class="item" href="https://folio.amanedev.me/" target="_blank" rel="noopener noreferrer">
           <div class="item-left">
             <span class="num">01</span>
@@ -318,7 +275,7 @@
       </div>
     </main>
 
-    <footer class="fade">© 2026 — all projects in progress</footer>
+    <footer>© 2026 — all projects in progress</footer>
   </div>
 
 </body>
