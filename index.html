@@ -62,7 +62,7 @@
     pointer-events: none;
     z-index: 1;
     opacity: 0.02;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4[...]
     background-size: 200px;
   }
 
@@ -168,9 +168,11 @@
     justify-content: space-between;
     padding: 1.25rem 0;
     border-bottom: 1px solid var(--border);
-    cursor: default;
+    cursor: pointer;
     transition: all 0.3s ease;
     position: relative;
+    text-decoration: none;
+    color: inherit;
   }
 
   .item::before {
@@ -239,6 +241,13 @@
     background: var(--accent-glow);
   }
 
+  /* Keyboard focus (since it's now a link) */
+  .item:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 6px;
+    border-radius: 6px;
+  }
+
   /* Footer */
   footer {
     margin-top: auto;
@@ -299,13 +308,13 @@
       <div class="divider fade"></div>
 
       <div class="list fade">
-        <div class="item">
+        <a class="item" href="https://folio.amanedev.me/" target="_blank" rel="noopener noreferrer">
           <div class="item-left">
             <span class="num">01</span>
             <span class="name">folio</span>
           </div>
           <span class="tag">Folio</span>
-        </div>
+        </a>
       </div>
     </main>
 
